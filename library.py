@@ -1,5 +1,3 @@
-
-
 # Library Borrowing Records
 
 n = int(input("Enter the number of library members: "))
