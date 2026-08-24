@@ -1,0 +1,209 @@
+#include <stdio.h>
+#define MAX 10
+#define SUBJECTS 2
+
+// Define structure with typedef
+typedef struct {
+    int roll;
+    char name[20];
+    int marks[2];
+    int total;
+    float Average;
+}Student;
+
+// Global array and count
+Student s[MAX];
+int count = 0;
+
+// Add student
+void addStudent() 
+{
+    if (count >= MAX)
+     {
+        printf("Limit reached!\n");
+        return;
+    }
+
+    printf("Enter Roll No: ");
+    scanf("%d", &s[count].roll);
+    printf("Enter Name: ");
+    scanf(" %s",s[count].name);
+    printf("Enter marks for 2 subjects:\n");
+    scanf("%d %d", &s[count].marks[0], &s[count].marks[1]);
+
+    s[count].total = s[count].marks[0] + s[count].marks[1];
+    s[count].Average = s[count].total / (float)SUBJECTS;
+    count++;
+}
+
+// Display students
+void display() {
+    if (count == 0) {
+        printf("No records to display.\n");
+        return;
+    }
+
+    printf("\nRoll\tName\tTotal\tAverage\n");
+    for (int i = 0; i < count; i++) {
+        printf("%d\t%s\t%d\t%0.2f\n", s[i].roll, s[i].name, s[i].total,s[i].Average);
+    }
+}
+
+// Linear search by roll number
+void search() {
+    int r, found = 0;
+    printf("Enter roll number to search: ");
+    scanf("%d", &r);
+
+    for (int i = 0; i < count; i++) 
+    {
+        if (s[i].roll == r)
+         {
+            printf("Found: %s with total %d\n", s[i].name, s[i].total);
+            found = 1;
+            break;
+        }
+    }
+    if (found==0)
+        printf("Student not found!\n");
+}
+
+// Bubble sort by total (descending)
+void sort() {
+    for (int i = 0; i < count - 1; i++) 
+    {
+        for (int j = 0; j < count - i - 1; j++) 
+        {
+            if (s[j].Average < s[j + 1].Average) {
+                Student temp = s[j];// no need to write struct
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+    printf("Sorted using Bubble Sort by Average marks (descending).\n");
+    
+    
+}
+
+// Main menu
+int main() {
+    int choice;
+
+    do {
+        printf("\n1. Add Student\n2. Display All\n3. Search Student\n4. Sort by Average\n5. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: addStudent(); 
+                   break;
+            case 2: display(); 
+                    break;
+            case 3: search(); 
+                  break;
+            case 4: sort(); 
+                    display();
+                    break;
+            case 5: printf("Exiting...\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+#include <stdio.h>
+#define SIZE 5
+
+int stack[SIZE];
+int top = -1;
+
+// Function to add parcel (Push)
+void addParcel(int parcelNumber) 
+{
+   
+    if (top == SIZE - 1)
+    {
+        printf("Cannot add parcel %d. Stack is full!\n", parcelNumber);
+    }
+    else 
+    {
+        top++;
+        stack[top] = parcelNumber;
+        printf("Parcel %d added to the stack.\n", parcelNumber);
+    }
+}
+
+// Function to remove parcel (Pop)
+void removeParcel() 
+{
+    if (top == -1)
+    {
+        printf("No parcel to remove. Stack is empty!\n");    
+    }
+    else 
+    {
+        printf("Parcel %d removed from the stack.\n", stack[top]);
+        top--;
+        
+    }
+}
+
+// Function to display all parcels in the stack
+void displayParcels() 
+{
+    if (top == -1)
+    {
+        printf("No parcels in the stack.\n");
+    }
+    else 
+    {
+        printf("Parcels in stack (top to bottom): ");
+        for (int i = top; i >= 0; i--)
+        {
+            printf("%d ", stack[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() 
+{
+     system("cls");
+    int choice, parcelNumber;
+
+    printf(" ***Post Office Parcel Stack Simulation ***\n");
+
+    do 
+    {
+        printf("\nMenu:\n");
+        printf("1. Add Parcel\n");
+        printf("2. Remove Parcel\n");
+        printf("3. Display Parcels\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) 
+        {
+            case 1:
+                printf("Enter parcel number to add: ");
+                scanf("%d", &parcelNumber);
+                addParcel(parcelNumber);
+                break;
+            case 2:
+                removeParcel();
+                break;
+            case 3:
+                displayParcels();
+                break;
+            case 4:
+                printf("Exiting parcel handling system.\n");
+                break;
+            default:
+                printf("Invalid choice! Please enter between 1-4.\n");
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+}
